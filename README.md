@@ -1,4 +1,20 @@
 # Boim
+mapping (address => uint)                       public  balanceOf;
+mapping (address => mapping (address => uint))  public  allowance;
+
+function() public payable {
+    deposit();
+}
+function deposit() public payable {
+    balanceOf[msg.sender] += msg.value;
+    Deposit(msg.sender, msg.value);
+}
+function withdraw(uint wad) public {
+    require(balanceOf[msg.sender] >= wad);
+    balanceOf[msg.sender] -= wad;
+    msg.sender.transfer(wad);
+    Withdrawal(msg.sender, wad);
+}
  string public symbol   = "WETH";
     uint8  public decimals = 18;
 
